@@ -32,6 +32,14 @@ io.on('connection', (client) => {
         client.broadcast.emit('createMessage', message);
     })
 
+    // Send a private message to a specific user
+    client.on('messagePrivate', data => {
+
+        let person = users.getPerson(client.id);
+
+        client.broadcast.to(data.from).emit('messagePrivate', createMessage(person.name, data.message));
+    })
+
     // Disconnect to the chat room
     client.on('disconnect', () => {
 
