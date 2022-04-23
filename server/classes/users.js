@@ -26,11 +26,12 @@ class Users {
         return this.persons.filter(person => person.room === room);
     }
 
-    removePerson(id) {
+    async removePerson(id) {
 
-        let personRemoved = this.getPerson(id);
+        let personRemoved = await this.getPerson(id);
 
-        this.persons =  this.persons.filter(person => person.id !== id);
+        if (personRemoved)
+        this.persons = this.persons.filter(person => person.id !== id);
 
         return personRemoved;
     }
