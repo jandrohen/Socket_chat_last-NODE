@@ -26,14 +26,13 @@ socket.on('disconnect', function() {
 
 });
 
-
 // Send Information
-socket.emit('enviarMensaje', {
-    usuario: 'Fernando',
-    mensaje: 'Hola Mundo'
-}, function(resp) {
-    console.log('respuesta server: ', resp);
-});
+// socket.emit('enviarMensaje', {
+//     usuario: 'Fernando',
+//     mensaje: 'Hola Mundo'
+// }, function(resp) {
+//     console.log('respuesta server: ', resp);
+// });
 
 // Listen Information
 socket.on('createMessage', function(mensaje) {
