@@ -19,7 +19,7 @@ socket.on('connect', function() {
     } );
 });
 
-// escuchar
+// Listen
 socket.on('disconnect', function() {
 
     console.log('Perdimos conexión con el servidor');
@@ -27,7 +27,7 @@ socket.on('disconnect', function() {
 });
 
 
-// Enviar información
+// Send Information
 socket.emit('enviarMensaje', {
     usuario: 'Fernando',
     mensaje: 'Hola Mundo'
@@ -35,9 +35,13 @@ socket.emit('enviarMensaje', {
     console.log('respuesta server: ', resp);
 });
 
-// Escuchar información
-socket.on('enviarMensaje', function(mensaje) {
-
+// Listen Information
+socket.on('createMessage', function(mensaje) {
     console.log('Servidor:', mensaje);
+});
 
+// Listen users changed
+// user login or logout in a chat room
+socket.on('listPerson', function(persons) {
+    console.log(persons);
 });

@@ -28,9 +28,9 @@ class Users {
 
     removePerson(id) {
 
-        let personRemoved = this.getPersons(id);
+        let personRemoved = this.getPerson(id);
 
-        this.persons.filter(person => person.id !== id);
+        this.persons =  this.persons.filter(person => person.id !== id);
 
         return personRemoved;
     }

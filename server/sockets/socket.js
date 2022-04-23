@@ -16,6 +16,17 @@ io.on('connection', (client) => {
 
         let persons = users.addPerson(client.id, data.name);
 
+        client.broadcast.emit('listPerson', users.getPersons());
+
         callback(persons);
+    });
+
+    client.on('disconnect', () => {
+
+        let personRemoved = users.removePerson(client.id);
+
+        client.broadcast.emit('createMessage', { user:'Administrator', mensaje:`${personRemoved.name} abandonó el chat`});
+        client.broadcast.emit('listPerson', users.getPersons());
+
     })
 });
