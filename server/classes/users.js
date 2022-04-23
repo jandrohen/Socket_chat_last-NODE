@@ -23,7 +23,7 @@ class Users {
     }
 
     getPersonsForRoom(room) {
-        // ...
+        return this.persons.filter(person => person.room === room);
     }
 
     removePerson(id) {

@@ -16,13 +16,14 @@ io.on('connection', (client) => {
             });
         }
 
+        // Join a user to a particular room
         client.join(data.room)
 
         let persons = users.addPerson(client.id, data.name, data.room);
 
-        client.broadcast.emit('listPerson', users.getPersons());
+        client.broadcast.to(data.room).emit('listPerson', users.getPersonsForRoom(data.room));
 
-        callback(persons);
+        callback(users.getPersonsForRoom(data.room));
     });
 
     // Broadcasts a message from a user to the other members of the room
@@ -31,7 +32,7 @@ io.on('connection', (client) => {
         let person = users.getPerson(client.id);
 
         let message = createMessage(person.name,data.message);
-        client.broadcast.emit('createMessage', message);
+        client.broadcast.to(person.room).emit('createMessage', message);
     })
 
     // Send a private message to a specific user
@@ -42,12 +43,12 @@ io.on('connection', (client) => {
     })
 
     // Disconnect to the chat room
-    client.on('disconnect', () => {
+    client.on('disconnect', async () => {
 
-        let personRemoved = users.removePerson(client.id);
+        let personRemoved = await users.removePerson(client.id);
 
-        client.broadcast.emit('createMessage', createMessage('Administrator', `${personRemoved.name} salió`));
-        client.broadcast.emit('listPerson', users.getPersons());
+        client.broadcast.to(personRemoved.room).emit('createMessage', createMessage('Administrator', `${personRemoved.name} salió`));
+        client.broadcast.to(personRemoved.room).emit('listPerson', users.getPersonsForRoom(personRemoved.room));
 
     })
 });
