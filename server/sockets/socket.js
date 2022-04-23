@@ -9,14 +9,16 @@ io.on('connection', (client) => {
     // Entrance to the chat room
     client.on('onChat', (data, callback) =>{
 
-        if (!data.name) {
+        if (!data.name || !data.room) {
             return callback({
                 error: true,
                 msg: 'El nombre es necesario'
             });
         }
 
-        let persons = users.addPerson(client.id, data.name);
+        client.join(data.room)
+
+        let persons = users.addPerson(client.id, data.name, data.room);
 
         client.broadcast.emit('listPerson', users.getPersons());
 
@@ -36,7 +38,6 @@ io.on('connection', (client) => {
     client.on('messagePrivate', data => {
 
         let person = users.getPerson(client.id);
-
         client.broadcast.to(data.from).emit('messagePrivate', createMessage(person.name, data.message));
     })
 
