@@ -17,6 +17,7 @@ socket.on('connect', function() {
 
     socket.emit('onChat', user, function ( resp ) {
         console.log('Usuarios conectados', resp);
+        renderUsers(resp);
     } );
 });
 
@@ -43,7 +44,8 @@ socket.on('createMessage', function(mensaje) {
 // Listen users changed
 // user login or logout in a chat room
 socket.on('listPerson', function(persons) {
-    console.log(persons);
+    renderUsers(persons);
+
 });
 
 // Listen private messages
