@@ -20,3 +20,12 @@ function renderUsers(persons) {
     divUsuarios.html(html);
 
 }
+
+
+// Listeners
+divUsuarios.on( 'click','a', function(){
+    let id = $(this).data('id');
+    if(id) {
+        console.log(id)
+    }
+})
