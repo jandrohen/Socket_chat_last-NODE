@@ -37,8 +37,8 @@ socket.on('disconnect', function() {
 // });
 
 // Listen Information
-socket.on('createMessage', function(mensaje) {
-    console.log('Servidor:', mensaje);
+socket.on('createMessage', function(message) {
+    renderMessage(message)
 });
 
 // Listen users changed

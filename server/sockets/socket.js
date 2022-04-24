@@ -27,12 +27,14 @@ io.on('connection', (client) => {
     });
 
     // Broadcasts a message from a user to the other members of the room
-    client.on('createMessage', (data) => {
+    client.on('createMessage', (data, callback) => {
 
         let person = users.getPerson(client.id);
 
         let message = createMessage(person.name,data.message);
         client.broadcast.to(person.room).emit('createMessage', message);
+
+        callback(message);
     })
 
     // Send a private message to a specific user
