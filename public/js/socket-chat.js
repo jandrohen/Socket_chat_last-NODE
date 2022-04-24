@@ -38,7 +38,8 @@ socket.on('disconnect', function() {
 
 // Listen Information
 socket.on('createMessage', function(message) {
-    renderMessage(message)
+    renderMessage(message, false);
+    scrollBottom();
 });
 
 // Listen users changed
